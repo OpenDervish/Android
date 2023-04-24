@@ -1,0 +1,144 @@
+//Java
+package com.example.counter;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    Button buttonStart, buttonStop;
+    TextView counterValue;
+    public int counter=0;
+    public boolean running=false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);//method initializes the layout
+        setContentView(R.layout.activity_main);
+        buttonStart=(Button)findViewById(R.id.btn_start);//variables=objects in the layout with the IDs
+        buttonStart.setOnClickListener(this);//interface
+        buttonStop=(Button)findViewById(R.id.btn_stop);
+        buttonStop.setOnClickListener(this); //current activity (which implements the OnClickListener interface) will handle the clicks.
+        counterValue=(TextView)findViewById(R.id.txt_value);
+    }
+
+    @Override
+    public void onClick(View v) { //method handles the click events of the two buttons/View object as its parameter
+        if(v.equals(buttonStart)){
+            counterStart();
+        } else if(v.equals(buttonStop)) {
+            counterStop();
+        }
+
+    }
+
+    private void counterStop() {
+        this.running=false;
+        //buttonStart.setEnabled(true); //presumably to prevent the user from clicking the buttonStop multiple times and potentially causing errors in the application.
+        //buttonStop.setEnabled(false);
+    }
+
+    private void counterStart() {
+        counter=0;
+        running=true;
+        System.out.println("Start ->"+Thread.currentThread().getName());
+        new MyCounter().start(); //creates a new instance of the MyCounter class (which presumably extends the Thread class), starts the thread using the start()
+        //buttonStart.setEnabled(false); //method can be used to enable or disable a button in the user interface.
+        //buttonStop.setEnabled(true);
+
+    }
+
+    Handler handler = new Handler(Looper.getMainLooper()) //object receives the message and updates the counterValue TextView with the current value of the counter.
+    { //Handler object, which is used to receive messages from a background thread and update the UI on the main thread.
+        public void handleMessage(Message mes){
+            counterValue.setText(String.valueOf(mes.what));
+        }
+    };
+
+
+    class MyCounter extends Thread{ //new instance extends the Thread class, and starts it
+        public void run()
+        {
+            System.out.println("MyCounter ->"+Thread.currentThread().getName());
+            while(running){ //loop that increments the counter variable and sends an empty message to the Handler object every second
+                counter++;
+                handler.sendEmptyMessage(counter);
+                try{
+                    Thread.sleep(1000);
+                } catch(Exception e){}//Exception that may occur during the Thread.sleep() method call.
+
+            }
+        }
+    }
+}
+
+//XML
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btn_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.472" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Counter Application"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#3F51B5"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.557"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.105" />
+
+    <TextView
+        android:id="@+id/txt_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Counter Value"
+        android:textAlignment="center"
+        android:textColor="#E91E63"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.223" />
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.323" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
