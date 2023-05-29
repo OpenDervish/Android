@@ -1,0 +1,253 @@
+//XML
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignInActivity">
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@color/grey"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="SIGN-IN ACTIVITY"
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/heading"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/username_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:autofillHints="username"
+            android:ems="10"
+            android:hint="username"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:autofillHints="password"
+            android:ems="10"
+            android:hint="password"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="40dp"
+            android:text="Sign in"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+//JAVA
+package csmp.part_a.p3;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private Button signInButton;
+    private EditText usernameField;
+    private EditText passwordField;
+
+    private String username;
+    private String password;
+
+    public static final int MAX_ATTEMPTS = 2;
+    private int attempts = 0;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sign_in);
+
+        usernameField = findViewById(R.id.username_edit_text);
+        passwordField = findViewById(R.id.password_edit_text);
+        signInButton = findViewById(R.id.button);
+
+        Bundle bundle = getIntent().getExtras();
+        username = bundle.getString("userNameKey");
+        password = bundle.getString("passwordKey");
+
+        signInButton.setOnClickListener(this);
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        String enteredUsername = usernameField.getText().toString();
+        String enteredPassword = passwordField.getText().toString();
+
+        if (enteredUsername.equals(username) && enteredPassword.equals(password)) {
+            makeToast("Successful Login!");
+        } else {
+            if (attempts < MAX_ATTEMPTS) {
+                makeToast("Incorrect login credentials\nLogin attempts remaining: " + (MAX_ATTEMPTS - attempts));
+            } else {
+                makeToast("Failed Login Attempts");
+                signInButton.setEnabled(false);
+            }
+            attempts++;
+        }
+    }
+
+    private void makeToast(String toastMessage) {
+        Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
+    }
+}
+
+//XML
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUpActivity">
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@color/grey"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="SIGN-UP ACTIVITY"
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/heading"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/username_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:autofillHints="username"
+            android:ems="10"
+            android:hint="username"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:autofillHints="password"
+            android:ems="10"
+            android:hint="password"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="40dp"
+            android:text="Sign up" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+//JAVA
+package csmp.part_a.p3;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private EditText usernameField;
+    private EditText passwordField;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sign_up);
+
+        usernameField = findViewById(R.id.username_edit_text);
+        passwordField = findViewById(R.id.password_edit_text);
+        Button signUpButton = findViewById(R.id.button);
+
+        signUpButton.setOnClickListener(this);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View view) {
+        // no need of switch case because, we are listening for a single button click
+        String username, password;
+        username = usernameField.getText().toString();
+        password = passwordField.getText().toString();
+
+        String pwdValidationRegex = "^(?=.*[0-9])"
+                + "(?=.*[a-z])"
+                + "(?=.*[A-Z])"
+                + "(?=.*[@#$%^&+=])"
+                + "(?=\\S+$).{8,}$";
+        //For ref: https://www.geeksforgeeks.org/how-to-validate-a-password-using-regular-expressions-in-java/
+
+        if (username.isEmpty()) {
+            makeToast("Please don't forget to fill up username...");
+            return;
+        }
+        if (!password.matches(pwdValidationRegex)) {
+            makeToast("Password validation failed!");
+        } else {
+            Bundle userBundle = new Bundle();
+            userBundle.putString("userNameKey", username);
+            userBundle.putString("passwordKey", password);
+            Intent intent = new Intent(this, SignInActivity.class);
+            intent.putExtras(userBundle);
+            startActivity(intent);
+        }
+    }
+
+    private void makeToast(String toastMessage) {
+        Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
+    }
+}
