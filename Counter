@@ -17,60 +17,68 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean running=false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);//method initializes the layout
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        buttonStart=(Button)findViewById(R.id.btn_start);//variables=objects in the layout with the IDs
-        buttonStart.setOnClickListener(this);//interface
+        buttonStart=(Button)findViewById(R.id.btn_start);
+        buttonStart.setOnClickListener(this);
         buttonStop=(Button)findViewById(R.id.btn_stop);
-        buttonStop.setOnClickListener(this); //current activity (which implements the OnClickListener interface) will handle the clicks.
+        buttonStop.setOnClickListener(this); 
         counterValue=(TextView)findViewById(R.id.txt_value);
     }
 
     @Override
-    public void onClick(View v) { //method handles the click events of the two buttons/View object as its parameter
-        if(v.equals(buttonStart)){
+    public void onClick(View v) 
+    {
+        if(v.equals(buttonStart))
+        {
             counterStart();
-        } else if(v.equals(buttonStop)) {
+        } 
+        else if(v.equals(buttonStop)) 
+        {
             counterStop();
         }
-
     }
 
-    private void counterStop() {
+    private void counterStop() 
+    {
         this.running=false;
-        //buttonStart.setEnabled(true); //presumably to prevent the user from clicking the buttonStop multiple times and potentially causing errors in the application.
-        //buttonStop.setEnabled(false);
+        buttonStart.setEnabled(true); 
+        buttonStop.setEnabled(false);
     }
 
-    private void counterStart() {
+    private void counterStart()
+    {
         counter=0;
         running=true;
         System.out.println("Start ->"+Thread.currentThread().getName());
-        new MyCounter().start(); //creates a new instance of the MyCounter class (which presumably extends the Thread class), starts the thread using the start()
-        //buttonStart.setEnabled(false); //method can be used to enable or disable a button in the user interface.
-        //buttonStop.setEnabled(true);
-
+        new MyCounter().start();
+        buttonStart.setEnabled(false); 
+        buttonStop.setEnabled(true);
     }
 
-    Handler handler = new Handler(Looper.getMainLooper()) //object receives the message and updates the counterValue TextView with the current value of the counter.
-    { //Handler object, which is used to receive messages from a background thread and update the UI on the main thread.
-        public void handleMessage(Message mes){
+    Handler handler = new Handler(Looper.getMainLooper())
+    { 
+        public void handleMessage(Message mes)
+        {
             counterValue.setText(String.valueOf(mes.what));
         }
     };
 
 
-    class MyCounter extends Thread{ //new instance extends the Thread class, and starts it
+    class MyCounter extends Thread{ 
         public void run()
         {
             System.out.println("MyCounter ->"+Thread.currentThread().getName());
-            while(running){ //loop that increments the counter variable and sends an empty message to the Handler object every second
+            while(running)
+            { 
                 counter++;
                 handler.sendEmptyMessage(counter);
-                try{
+                try
+                {
                     Thread.sleep(1000);
-                } catch(Exception e){}//Exception that may occur during the Thread.sleep() method call.
+                }catch(Exception e){}
 
             }
         }
