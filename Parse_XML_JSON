@@ -252,6 +252,7 @@ public class MainActivity2 extends AppCompatActivity    //ParseActivity
 }
 
 //3
+//along with MainActivity
 City.java
 package com.example.parse_xml;
 
@@ -285,3 +286,44 @@ public class City {
                 "\n Humidity \t : \t" + humidity + "\n";
     }
 }
+
+//both in assets folder(created) and placed along with java,res in main
+//city.json
+{
+  "cities": [
+    {
+      "City_name": "Mysore",
+      "Latitude": 12.295,
+      "Longitude": 76.639,
+      "Temperature": 22,
+      "Humidity": "90%"
+    },
+    {
+      "City_name": "Mangaluru",
+      "Latitude": 15.295,
+      "Longitude": 70.639,
+      "Temperature": 25,
+      "Humidity": "70%"
+    }
+  ]
+}
+
+//city.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<cities>
+    <city>
+        <City_name>Mysore</City_name>
+        <Latitude>12.295</Latitude>
+        <Longitude>76.639</Longitude>
+        <Temperature>22</Temperature>
+        <Humidity>90%</Humidity>
+    </city>
+
+    <city>
+        <City_name>Mangaluru</City_name>
+        <Latitude>15.295</Latitude>
+        <Longitude>70.639</Longitude>
+        <Temperature>24</Temperature>
+        <Humidity>70%</Humidity>
+    </city>
+</cities>
