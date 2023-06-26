@@ -96,487 +96,10 @@
             android:textSize="25sp"
             tools:targetApi="lollipop" />
 
-    </GridLayout><?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:columnCount="3"
-    android:rowCount="5">
-
-    <Button
-        android:id="@+id/one"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="One" />
-
-    <Button
-        android:id="@+id/two"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Two" />
-
-    <Button
-        android:id="@+id/three"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Three" />
-
-    <Button
-        android:id="@+id/four"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Four" />
-
-    <Button
-        android:id="@+id/five"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Five" />
-
-    <Button
-        android:id="@+id/six"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Six" />
-
-    <Button
-        android:id="@+id/seven"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Seven" />
-
-    <Button
-        android:id="@+id/eight"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Eight" />
-
-    <Button
-        android:id="@+id/nine"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Nine" />
-
-    <Button
-        android:id="@+id/asterisk"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Asterisk" />
-
-    <Button
-        android:id="@+id/zero"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Zero" />
-
-    <Button
-        android:id="@+id/hash"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Hash" />
-
-</GridLayout>
-
-//Java 
-package com.example.dial;
-
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
-
-    private TextView inputTextView;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        inputTextView = findViewById(R.id.expression);
-
-        Button zeroBtn = findViewById(R.id.zero);
-        Button oneBtn = findViewById(R.id.one);
-        Button twoBtn = findViewById(R.id.two);
-        Button threeBtn = findViewById(R.id.three);
-        Button fourBtn = findViewById(R.id.four);
-        Button fiveBtn = findViewById(R.id.five);
-        Button sixBtn = findViewById(R.id.six);
-        Button sevenBtn = findViewById(R.id.seven);
-        Button eightBtn = findViewById(R.id.eight);
-        Button nineBtn = findViewById(R.id.nine);
-
-        Button dotBtn = findViewById(R.id.asterisk);
-        Button hashBtn = findViewById(R.id.hash);
-        TextView backspaceBtn = findViewById(R.id.backspace);
-
-        Button callBtn = findViewById(R.id.call);
-        Button saveBtn = findViewById(R.id.save);
-
-        zeroBtn.setOnClickListener(this);
-        oneBtn.setOnClickListener(this);
-        twoBtn.setOnClickListener(this);
-        threeBtn.setOnClickListener(this);
-        fourBtn.setOnClickListener(this);
-        fiveBtn.setOnClickListener(this);
-        sixBtn.setOnClickListener(this);
-        sevenBtn.setOnClickListener(this);
-        eightBtn.setOnClickListener(this);
-        nineBtn.setOnClickListener(this);
-
-        dotBtn.setOnClickListener(this);
-        backspaceBtn.setOnClickListener(this);
-        backspaceBtn.setOnLongClickListener(this);
-        hashBtn.setOnClickListener(this);
-
-        callBtn.setOnClickListener(this);
-        saveBtn.setOnClickListener(this);
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public void onClick(View view) {
-        int id = view.getId();
-        String inputPhoneNo = inputTextView.getText().toString();
-
-
-        if (id == R.id.call)
-        {
-            callMethod(inputPhoneNo);
-        }
-
-        if (id == R.id.save)
-        {
-            saveMethod(inputPhoneNo);
-        }
-
-        if (id == R.id.zero)
-        {
-            inputTextView.append("0");
-        }
-
-        if (id == R.id.one)
-        {
-            inputTextView.append("1");
-        }
-
-        if (id == R.id.two)
-        {
-            inputTextView.append("2");
-        }
-
-        if (id == R.id.three)
-        {
-            inputTextView.append("3");
-        }
-
-        if (id == R.id.four)
-        {
-            inputTextView.append("4");
-        }
-
-        if (id == R.id.five)
-        {
-            inputTextView.append("5");
-        }
-
-        if (id == R.id.six)
-        {
-            inputTextView.append("6");
-        }
-
-        if (id == R.id.seven)
-        {
-            inputTextView.append("7");
-        }
-
-        if (id == R.id.eight)
-        {
-            inputTextView.append("8");
-        }
-
-        if (id == R.id.nine)
-        {
-            inputTextView.append("9");
-        }
-
-        if (id == R.id.asterisk)
-        {
-            inputTextView.append("*");
-        }
-
-        if (id == R.id.hash)
-        {
-            inputTextView.append("#");
-        }
-
-        if (id == R.id.backspace) {
-            int inputLength = inputPhoneNo.length();
-            if (inputLength > 0) {
-                inputTextView.setText(inputPhoneNo.substring(0, inputLength - 1));
-            }
-        }
-    }
-
-    private void callMethod(String number) {
-        // if Intent.ACTION_CALL is used instead of Intent.ACTION_DIAL,
-        // then manually allow the telephone permission in the App Settings
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        Uri uri = Uri.parse("tel:" + number);
-        intent.setData(uri);
-        startActivity(intent);
-    }
-
-    private void saveMethod(String inputPhoneNo) {
-        Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
-        intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
-        intent.putExtra(ContactsContract.Intents.Insert.PHONE, inputPhoneNo);
-        startActivity(intent);
-    }
-
-    @Override
-    public boolean onLongClick(View view) {
-        inputTextView.setText("");
-        return true;
-    }
-}
-
+    </GridLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-//XML 2<?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:columnCount="3"
-    android:rowCount="5">
-
-    <Button
-        android:id="@+id/one"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="One" />
-
-    <Button
-        android:id="@+id/two"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Two" />
-
-    <Button
-        android:id="@+id/three"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Three" />
-
-    <Button
-        android:id="@+id/four"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Four" />
-
-    <Button
-        android:id="@+id/five"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Five" />
-
-    <Button
-        android:id="@+id/six"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Six" />
-
-    <Button
-        android:id="@+id/seven"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Seven" />
-
-    <Button
-        android:id="@+id/eight"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Eight" />
-
-    <Button
-        android:id="@+id/nine"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Nine" />
-
-    <Button
-        android:id="@+id/asterisk"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Asterisk" />
-
-    <Button
-        android:id="@+id/zero"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Zero" />
-
-    <Button
-        android:id="@+id/hash"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Hash" />
-
-</GridLayout>
-
-//Java 
-package com.example.dial;
-
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
-
-    private TextView inputTextView;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        inputTextView = findViewById(R.id.expression);
-
-        Button zeroBtn = findViewById(R.id.zero);
-        Button oneBtn = findViewById(R.id.one);
-        Button twoBtn = findViewById(R.id.two);
-        Button threeBtn = findViewById(R.id.three);
-        Button fourBtn = findViewById(R.id.four);
-        Button fiveBtn = findViewById(R.id.five);
-        Button sixBtn = findViewById(R.id.six);
-        Button sevenBtn = findViewById(R.id.seven);
-        Button eightBtn = findViewById(R.id.eight);
-        Button nineBtn = findViewById(R.id.nine);
-
-        Button dotBtn = findViewById(R.id.asterisk);
-        Button hashBtn = findViewById(R.id.hash);
-        TextView backspaceBtn = findViewById(R.id.backspace);
-
-        Button callBtn = findViewById(R.id.call);
-        Button saveBtn = findViewById(R.id.save);
-
-        zeroBtn.setOnClickListener(this);
-        oneBtn.setOnClickListener(this);
-        twoBtn.setOnClickListener(this);
-        threeBtn.setOnClickListener(this);
-        fourBtn.setOnClickListener(this);
-        fiveBtn.setOnClickListener(this);
-        sixBtn.setOnClickListener(this);
-        sevenBtn.setOnClickListener(this);
-        eightBtn.setOnClickListener(this);
-        nineBtn.setOnClickListener(this);
-
-        dotBtn.setOnClickListener(this);
-        backspaceBtn.setOnClickListener(this);
-        backspaceBtn.setOnLongClickListener(this);
-        hashBtn.setOnClickListener(this);
-
-        callBtn.setOnClickListener(this);
-        saveBtn.setOnClickListener(this);
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public void onClick(View view) {
-        int id = view.getId();
-        String inputPhoneNo = inputTextView.getText().toString();
-
-
-        if (id == R.id.call)
-        {
-            callMethod(inputPhoneNo);
-        }
-
-        if (id == R.id.save)
-        {
-            saveMethod(inputPhoneNo);
-        }
-
-        if (id == R.id.zero)
-        {
-            inputTextView.append("0");
-        }
-
-        if (id == R.id.one)
-        {
-            inputTextView.append("1");
-        }
-
-        if (id == R.id.two)
-        {
-            inputTextView.append("2");
-        }
-
-        if (id == R.id.three)
-        {
-            inputTextView.append("3");
-        }
-
-        if (id == R.id.four)
-        {
-            inputTextView.append("4");
-        }
-
-        if (id == R.id.five)
-        {
-            inputTextView.append("5");
-        }
-
-        if (id == R.id.six)
-        {
-            inputTextView.append("6");
-        }
-
-        if (id == R.id.seven)
-        {
-            inputTextView.append("7");
-        }
-
-        if (id == R.id.eight)
-        {
-            inputTextView.append("8");
-        }
-
-        if (id == R.id.nine)
-        {
-            inputTextView.append("9");
-        }
-
-        if (id == R.id.asterisk)
-        {
-            inputTextView.append("*");
-        }
-
-        if (id == R.id.hash)
-        {
-            inputTextView.append("#");
-        }
-
-        if (id == R.id.backspace) {
-            int inputLength = inputPhoneNo.length();
-            if (inputLength > 0) {
-                inputTextView.setText(inputPhoneNo.substring(0, inputLength - 1));
-            }
-        }
-    }
-
-    private void callMethod(String number) {
-        // if Intent.ACTION_CALL is used instead of Intent.ACTION_DIAL,
-        // then manually allow the telephone permission in the App Settings
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        Uri uri = Uri.parse("tel:" + number);
-        intent.setData(uri);
-        startActivity(intent);
-    }
-
-    private void saveMethod(String inputPhoneNo) {
-        Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
-        intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
-        intent.putExtra(ContactsContract.Intents.Insert.PHONE, inputPhoneNo);
-        startActivity(intent);
-    }
-
-    @Override
-    public boolean onLongClick(View view) {
-        inputTextView.setText("");
-        return true;
-    }
-}
+//button_layout
 <?xml version="1.0" encoding="utf-8"?>
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -586,63 +109,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     <Button
         android:id="@+id/one"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="One" />
+        
+        android:text="one" />
 
     <Button
         android:id="@+id/two"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Two" />
+        
+        android:text="two" />
 
     <Button
         android:id="@+id/three"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Three" />
+        
+        android:text="three" />
 
     <Button
         android:id="@+id/four"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Four" />
+        
+        android:text="four" />
 
     <Button
         android:id="@+id/five"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Five" />
+        
+        android:text="five" />
 
     <Button
         android:id="@+id/six"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Six" />
+        
+        android:text="six" />
 
     <Button
         android:id="@+id/seven"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Seven" />
+        
+        android:text="seven" />
 
     <Button
         android:id="@+id/eight"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Eight" />
+        
+        android:text="eight" />
 
     <Button
         android:id="@+id/nine"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Nine" />
+        
+        android:text="nine" />
 
     <Button
         android:id="@+id/asterisk"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Asterisk" />
+        
+        android:text="asterisk" />
 
     <Button
         android:id="@+id/zero"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Zero" />
+        
+        android:text="zero" />
 
     <Button
         android:id="@+id/hash"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Hash" />
+        
+        android:text="hash" />
 
 </GridLayout>
 
