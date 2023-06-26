@@ -62,7 +62,7 @@
 </RelativeLayout>
 
 //JAVA
-package csmp.part_a.p3;
+package com.example.Sign_Activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -187,7 +187,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 </RelativeLayout>
 
 //JAVA
-package csmp.part_a.p3;
+package com.example.Sign_Activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
